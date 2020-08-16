@@ -204,18 +204,28 @@ RUN apt-get -y update && \
     apt-get -y install openssh-server && \
     clean-layer.sh
 
+# install code server and jupyter extesion
+RUN \
+    # install code server
+    curl -fsSL https://code-server.dev/install.sh | sh && \
+    # install jupyter coder server extension
+    pip install jupyter-vscode-proxy
+
 # Set default values for environment variables
 ENV \
     # jupyter binding port
-    WORKSPACE_PORT="8888" \
+    JUPYTER_PORT="8888" \
     SSH_PORT="22" \
     # Set zsh as default shell (e.g. in jupyter)
     SHELL="/usr/bin/zsh" 
 
+WORKDIR $WORKSPACE_HOME
+
+EXPOSE ${JUPYTER_PORT} ${SSH_PORT}
+
+# entry point
 COPY start.sh ${RESOURCES_PATH}/start.sh
 RUN chmod 0755 ${RESOURCES_PATH}/start.sh
-EXPOSE ${WORKSPACE_PORT} ${SSH_PORT}
-
 # use global option with tini to kill full process groups: https://github.com/krallin/tini#process-group-killing
 ENTRYPOINT ["/tini", "-g", "--"]
 CMD ["bash", "/resources/start.sh"]
