@@ -194,41 +194,31 @@ RUN \
     clean-layer.sh
 
 # install some basic python libraries
-COPY resources/libraries ${RESOURCES_PATH}/libraries
-RUN \
-    pip install --no-cache-dir -r ${RESOURCES_PATH}/libraries/requirements-minimal.txt && \
-    clean-layer.sh
-
-# install jupyter tensorboard extension
-RUN \
-    pip install --no-cache-dir \
-        tensorflow==2.0.0 \
-        jupyter-tensorboard && \
-    clean-layer.sh
-
-# install code server and its jupyter extesion
+# COPY resources/libraries ${RESOURCES_PATH}/libraries
 # RUN \
-#     # install code server
-#     curl -fsSL https://code-server.dev/install.sh | sh && \
-#     # install jupyter coder server extension
-#     pip install jupyter-vscode-proxy && \
+#     pip install --no-cache-dir -r ${RESOURCES_PATH}/libraries/requirements-minimal.txt && \
 #     clean-layer.sh
 
-
-    
+# install ssh
+RUN apt-get -y update && \
+    apt-get -y install openssh-server && \
+    clean-layer.sh
 
 # Set default values for environment variables
 ENV \
     # jupyter binding port
-    WORKSPACE_PORT="8080" \
+    WORKSPACE_PORT="8888" \
+    SSH_PORT="22" \
     # Set zsh as default shell (e.g. in jupyter)
     SHELL="/usr/bin/zsh" 
 
-EXPOSE ${WORKSPACE_PORT}
+COPY start.sh ${RESOURCES_PATH}/start.sh
+RUN chmod 0755 ${RESOURCES_PATH}/start.sh
+EXPOSE ${WORKSPACE_PORT} ${SSH_PORT}
 
 # use global option with tini to kill full process groups: https://github.com/krallin/tini#process-group-killing
 ENTRYPOINT ["/tini", "-g", "--"]
-CMD ["bash", "-c", "jupyter notebook --notebook-dir=${WORKSPACE_HOME} --ip 0.0.0.0 --port ${WORKSPACE_PORT} --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''"]
+CMD ["bash", "/resources/start.sh"]
 
 
 # RUN useradd -ms /bin/bash  owner

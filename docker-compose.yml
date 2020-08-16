@@ -1,0 +1,9 @@
+version: '3'
+services:
+  mlworkspace:
+    image: "mltooling/ml-workspace-gpu:0.9.0-SNAPSHOT"
+    container_name: "mlworkspace"
+    ports:
+      - "8080:8080"
+  
+
