@@ -192,24 +192,30 @@ RUN \
     jupyter serverextension enable --py jupyter_http_over_ws && \
     # Cleanup
     clean-layer.sh
-# RUN python3 -m pip install --no-cache-dir jupyter matplotlib
-# # Pin ipykernel and nbformat; see https://github.com/ipython/ipykernel/issues/422
-# RUN python3 -m pip install --no-cache-dir jupyter_http_over_ws ipykernel==5.1.1 nbformat==4.4.0
-# RUN jupyter serverextension enable --py jupyter_http_over_ws
 
 # install some basic python libraries
-# COPY resources/libraries ${RESOURCES_PATH}/libraries
+COPY resources/libraries ${RESOURCES_PATH}/libraries
+RUN \
+    pip install --no-cache-dir -r ${RESOURCES_PATH}/libraries/requirements-minimal.txt && \
+    clean-layer.sh
+
+# install jupyter tensorboard extension
+RUN \
+    pip install --no-cache-dir \
+        tensorflow==2.0.0 \
+        jupyter-tensorboard && \
+    clean-layer.sh
+
+# install code server and its jupyter extesion
 # RUN \
-#     pip install --no-cache-dir -r ${RESOURCES_PATH}/libraries/requirements-minimal.txt && \
+#     # install code server
+#     curl -fsSL https://code-server.dev/install.sh | sh && \
+#     # install jupyter coder server extension
+#     pip install jupyter-vscode-proxy && \
 #     clean-layer.sh
 
-# install code server and jupyter extesion
-RUN \
-    # install code server
-    curl -fsSL https://code-server.dev/install.sh | sh && \
-    # install jupyter coder server extension
-    pip install jupyter-vscode-proxy
 
+    
 
 # Set default values for environment variables
 ENV \
