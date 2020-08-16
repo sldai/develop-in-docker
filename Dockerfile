@@ -221,8 +221,8 @@ ENV \
 EXPOSE ${WORKSPACE_PORT}
 
 # use global option with tini to kill full process groups: https://github.com/krallin/tini#process-group-killing
-ENTRYPOINT ["bash", "-c"]
-CMD ["jupyter notebook --notebook-dir=${WORKSPACE_HOME} --ip 0.0.0.0 --port ${WORKSPACE_PORT} --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''"]
+ENTRYPOINT ["/tini", "-g", "--"]
+CMD ["bash", "-c", "jupyter notebook --notebook-dir=${WORKSPACE_HOME} --ip 0.0.0.0 --port ${WORKSPACE_PORT} --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''"]
 
 
 # RUN useradd -ms /bin/bash  owner
