@@ -28,12 +28,12 @@ You can get into the containers via `localhost:8080` and `localhost:8081`
 
 ### jupyter
 
-![jupyter](img/jupyter.png)
+![jupyter](https://github.com/sldai/develop-in-docker/blob/master/img/jupyter.PNG?raw=true)
 
 ### vscode
 
-![vscode](img/vscode.png)
+![vscode](images/vscode.png)
 
 ### zsh
 
-![zsh](img/zsh.png)
+![zsh](images/zsh.png)
