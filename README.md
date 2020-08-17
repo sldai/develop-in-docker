@@ -22,18 +22,25 @@ export workspace=$PWD
 docker-compose up -d
 ```
 
-## Developing with the web based IDE
+### Developing with the web based IDE
 
 You can get into the containers via `localhost:8080` and `localhost:8081`
 
-### jupyter
+jupyter
 
 ![jupyter](images/jupyter.png)
 
-### vscode
+vscode
 
 ![vscode](images/vscode.png)
 
-### zsh
+zsh
 
 ![zsh](images/zsh.png)
+
+
+## Reference 
+
+[ml-workspace](https://github.com/ml-tooling/ml-workspace)
+
+[code-server](https://github.com/cdr/code-server)
