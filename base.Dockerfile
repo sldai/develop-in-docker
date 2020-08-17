@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest
+FROM tensorflow/tensorflow:latest-gpu
 
 USER root
 
@@ -193,11 +193,6 @@ RUN \
     # Cleanup
     clean-layer.sh
 
-# install some basic python libraries
-# COPY resources/libraries ${RESOURCES_PATH}/libraries
-# RUN \
-#     pip install --no-cache-dir -r ${RESOURCES_PATH}/libraries/requirements-minimal.txt && \
-#     clean-layer.sh
 
 # install ssh
 RUN apt-get -y update && \
@@ -230,5 +225,3 @@ RUN chmod 0755 ${RESOURCES_PATH}/start.sh
 ENTRYPOINT ["/tini", "-g", "--"]
 CMD ["bash", "/resources/start.sh"]
 
-
-# RUN useradd -ms /bin/bash  owner

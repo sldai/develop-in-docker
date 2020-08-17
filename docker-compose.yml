@@ -1,19 +1,20 @@
-version: '1'
+version: '3'
 services:
   # mlworkspace is a all-in-one web-based IDE 
   # see also https://github.com/ml-tooling/ml-workspace
   mlworkspace:
     image: "mltooling/ml-workspace-gpu:0.9.0-SNAPSHOT"
-    container_name: "mlworkspace"
+    container_name: "ide"
     ports:
-      - "$mlport:8080"
+      - "$ideport:8080"
     volumes: 
       - "$workspace:/workspace"
+  # A base image for further specialized configurations
   robot:
-    image: ""
+    image: "sldai/development-base"
     container_name: "robot"
     ports: 
-      - "8081:8888"
+      - "$developmentport:8888"
     volumes: 
       - $workspace:/workspace
 
