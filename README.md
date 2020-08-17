@@ -28,7 +28,7 @@ You can get into the containers via `localhost:8080` and `localhost:8081`
 
 ### jupyter
 
-![jupyter](images/jupyter.PNG)
+![jupyter](images/jupyter.png)
 
 ### vscode
 
