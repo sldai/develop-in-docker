@@ -2,7 +2,7 @@
 
 <!-- If you get tired of configuring development environment and dislike your pure system being contaminated by these configurations, you should try docker. Docker provides containerized environment, like but better conda.  -->
 
-This repository contains the docker images I used for development. Then you can develop in the well configured environments with a web based IDE.  
+This repository contains the docker images I used for development. You can use them to develop in the well configured environments with a web based IDE.  
 
 ## Getting Started
 
